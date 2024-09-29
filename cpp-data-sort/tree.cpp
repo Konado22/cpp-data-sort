@@ -3,12 +3,12 @@
 // Author      : Jesse Draper
 // Version     : 1.0
 // Copyright   : Copyright © 2017 SNHU COCE
-// Description : Hello World in C++, Ansi-style
+// Description : A Binary Search Tree to read from a file and store in structure for iteration.
 //============================================================================
 
 #include <iostream>
 #include <time.h>
-
+#include "CSVparser.hpp"
 
 using namespace std;
 
@@ -33,8 +33,8 @@ struct Bid {
 // Internal structure for tree node
 struct Node {
     Bid bid;
-    Node* left;
-    Node* right;
+    Node* left;//> values
+    Node* right;//< values
 
     // default constructor
     Node() {
@@ -45,7 +45,7 @@ struct Node {
     // initialize with a bid
     Node(Bid aBid) :
         Node() {
-        bid = aBid;
+        this->bid = aBid;
     }
 };
 
@@ -60,18 +60,16 @@ struct Node {
 class BinarySearchTree {
 
 private:
+    //private members
     Node* root;
-
     void addNode(Node* node, Bid bid);
     void inOrder(Node* node);
-    Node* removeNode(Node* node, string bidId);
-
+    void removeNode(string bidId);
 public:
     BinarySearchTree();
     virtual ~BinarySearchTree();
     void InOrder();
     void Insert(Bid bid);
-    void Remove(string bidId);
     Bid Search(string bidId);
     void postOrder();
 };
@@ -80,7 +78,6 @@ public:
  * Default constructor
  */
 BinarySearchTree::BinarySearchTree() {
-    // FixMe (1): initialize housekeeping variables
     //root is equal to nullptr
     root = nullptr;
 }
@@ -96,9 +93,8 @@ BinarySearchTree::~BinarySearchTree() {
  * Traverse the tree in order
  */
 void BinarySearchTree::InOrder() {
-    // FixMe (2): In order root
     // call inOrder fuction and pass root 
-    inOrder(root);
+    this->inOrder(root);
 }
 
 /**
@@ -107,17 +103,7 @@ void BinarySearchTree::InOrder() {
 void BinarySearchTree::postOrder() {
     // FixMe (3): Post order root
     // postOrder root
-    postOrder(root);
-
-}
-
-/**
- * Traverse the tree in pre-order
- */
-void BinarySearchTree::PreOrder(*Node Node) {
-    // FixMe (4): Pre order root
-    // preOrder root
-    preOrder(root);
+    this->postOrder(root);
 }
 
 /**
@@ -126,14 +112,14 @@ void BinarySearchTree::PreOrder(*Node Node) {
 void BinarySearchTree::Insert(Bid bid) {
     // FIXME (5) Implement inserting a bid into the tree
     // if root equarl to null ptr
-    if (root != nullptr) {
+    if (root == nullptr) {
         root = new Node(bid);
 
     }
     else {
-        addNode(root, bid);
+        this->addNode(root, bid);
     }
-    // root is equal to new node bid
+    // if no root node create
   // else
     // add Node root and bid
 }
@@ -142,7 +128,6 @@ void BinarySearchTree::Insert(Bid bid) {
  * Remove a bid
  */
 void BinarySearchTree::removeNode(string bidId) {
-    // FIXME (6) Implement removing a bid from the tree
     // remove node root bidID
     if (root = nullptr) {
         return;
@@ -162,12 +147,12 @@ void BinarySearchTree::removeNode(string bidId) {
         }
     }
 }
+// edge case check root, if next nodes id is larger move left else move right
 
 /**
  * Search for a bid
  */
 Bid BinarySearchTree::Search(string bidId) {
-    // FIXME (7) Implement searching the tree for a bid
     // set current node equal to root
     Node* currentNode = root;
     while (currentNode) {
@@ -223,7 +208,6 @@ void BinarySearchTree::addNode(Node* node, Bid bid) {
         // recurse down the left node
 }
 void BinarySearchTree::inOrder(Node* node) {
-    // FixMe (9): Pre order root
     if (node != nullptr) {
         this->inOrder(root);
         cout << node->bid.bidId << " || " << node->bid.title << " || " << node->bid.amount << " ||" << node->bid.fund;
@@ -351,9 +335,6 @@ int main(int argc, char* argv[]) {
         csvPath = "eBid_Monthly_Sales_Dec_2016.csv";
         bidKey = "98109";
     }
-
-    // Define a timer variable
-    clock_t ticks;
 
     // Define a binary search tree to hold all bids
     BinarySearchTree* bst;
