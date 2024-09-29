@@ -64,6 +64,7 @@ private:
     Node* root;
     void addNode(Node* node, Bid bid);
     void inOrder(Node* node);
+    void preOrder(Node* node);
     void removeNode(string bidId);
 public:
     BinarySearchTree();
@@ -220,7 +221,6 @@ void BinarySearchTree::inOrder(Node* node) {
 //InOder right
 }
 void BinarySearchTree::postOrder(Node* node) {
-    // FixMe (10): Pre order root
     //if node is not equal to null ptr
     if (node != nullptr) {
         postOrder(node);
@@ -234,7 +234,6 @@ void BinarySearchTree::postOrder(Node* node) {
 }
 
 void BinarySearchTree::preOrder(Node* node) {
-    // FixMe (11): Pre order root
     //if node is not equal to null ptr
     if (node != nullptr) {
         cout << node->bid.bidId << " || " << node->bid.title << " || " << node->bid.amount << " ||" << node->bid.fund;
